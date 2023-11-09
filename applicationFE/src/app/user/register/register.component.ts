@@ -21,12 +21,22 @@ export class RegisterComponent {
     Validators.maxLength(10),
   ]);
 
+  showAlert = false;
+  alertMessage = 'Please wait! Your account is being created!';
+  alertColor = 'blue';
+
   registerForm = new FormGroup({
     name: this.name,
     email: this.email,
     age: this.age,
-    passpassword: this.password,
+    password: this.password,
     confirm_password: this.confirm_password,
     phoneNumber: this.phoneNumber,
   });
+
+  register() {
+    this.showAlert = true;
+    this.alertMessage = 'Please wait! Your account is being created!';
+    this.alertColor = 'blue';
+  }
 }
