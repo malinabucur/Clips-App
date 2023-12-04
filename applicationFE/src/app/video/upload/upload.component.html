@@ -3,6 +3,7 @@
     <div class="font-bold mb-6">Upload Video</div>
 
     <div
+      *ngIf="!nextStep; else uploadFormContainer"
       app-event-blocker
       (dragend)="isDragover = false"
       (dragover)="isDragover = true"
@@ -18,7 +19,7 @@
       <h5>Drop your file here (mp4 only!)</h5>
     </div>
 
-    <div>
+    <ng-template #uploadFormContainer>
       <form>
         <h2 class="my-4 text-xl">Select a Thumbnail</h2>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -50,6 +51,6 @@
           </button>
         </div>
       </form>
-    </div>
+    </ng-template>
   </div>
 </section>
