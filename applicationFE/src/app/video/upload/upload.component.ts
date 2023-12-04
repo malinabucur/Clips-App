@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { last, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import { ClipService } from 'src/app/services/clip.service';
 
 @Component({
   selector: 'app-upload',
@@ -25,7 +26,8 @@ export class UploadComponent {
 
   constructor(
     private storage: AngularFireStorage,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private clipsService: ClipService
   ) {
     auth.user.subscribe((user) => (this.user = user));
   }
@@ -77,17 +79,19 @@ export class UploadComponent {
       .subscribe({
         next: (url) => {
           const clip = {
-            uid: this.user?.uid,
-            displayName: this.user?.displayName,
+            uid: this.user?.uid as string,
+            displayName: this.user?.displayName as string,
             title: this.title.value,
             fileName: `${clipFileName}.mp4`,
             url,
           };
 
+          this.clipsService.createClip(clip);
+
           console.log(clip);
 
           this.alertColor = 'green';
-          this.alertMessage = 'Success! Your clip is now ready to share!';
+          this.alertMessage = 'Success! Your clip is now ready to be share!';
           this.showPercentage = false;
         },
         error: (error) => {
